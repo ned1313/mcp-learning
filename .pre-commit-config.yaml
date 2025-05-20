@@ -1,0 +1,23 @@
+repos:
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.88.5
+  hooks:
+    - id: terraform_fmt
+      description: "Formats Terraform code"
+      args:
+        - --args=-recursive
+    - id: terraform_validate
+      description: "Validates Terraform code"
+    - id: terraform_tfsec
+      description: "Runs tfsec static analysis against Terraform code"
+    - id: terraform_docs
+      description: "Updates README.md with Terraform module documentation"
+      args:
+        - --args=--config=.terraform-docs.yml
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+    - id: check-merge-conflict
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: check-yaml
