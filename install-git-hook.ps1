@@ -7,27 +7,27 @@ $RepoRoot = git rev-parse --show-toplevel
 $HookPath = Join-Path $RepoRoot ".git\hooks\pre-commit"
 
 # Create the pre-commit hook content
-$HookContent = @"
+$HookContent = @'
 #!/bin/sh
 
 # Path to the manual pre-commit script, relative to the repo root
 SCRIPT_PATH="./manual-pre-commit.ps1"
 
 # Get the repo root
-REPO_ROOT=\$(git rev-parse --show-toplevel)
+REPO_ROOT=$(git rev-parse --show-toplevel)
 
 # Run the PowerShell script
-pwsh -File "\$REPO_ROOT/\$SCRIPT_PATH"
+pwsh -File "$REPO_ROOT/$SCRIPT_PATH"
 
 # Check the exit code
-exit_code=\$?
-if [ \$exit_code -ne 0 ]; then
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
   echo "Pre-commit hook failed. Please fix the issues and try again."
-  exit \$exit_code
+  exit $exit_code
 fi
 
 exit 0
-"@
+'@
 
 # Save the hook script
 Set-Content -Path $HookPath -Value $HookContent -Force
